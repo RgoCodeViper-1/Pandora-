@@ -1,0 +1,54 @@
+[package]
+name    = "pandora_core"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name       = "pandora_core"
+crate-type = ["cdylib", "rlib"]
+
+# ── Runtime dependencies ──────────────────────────────────────────────────────
+
+[dependencies]
+
+# PyO3 — always compiled in; no feature gate needed.
+# extension-module tells pyo3 not to link against libpython at compile time
+# (maturin handles that at link time for the .so/.pyd).
+pyo3 = { version = "0.21", features = ["extension-module"] }
+
+# Logging — sink.rs uses log::trace!(); engine.rs uses eprintln! for warnings.
+log        = "0.4"
+env_logger = "0.11"
+
+# Regex engine — identical version stack to ripgrep so HIR types are compatible.
+regex-automata = { version = "0.4", features = ["meta", "nfa", "dfa", "hybrid"] }
+regex-syntax   = "0.8"
+
+# Byte-string helpers — bstr, memchr (same crates ripgrep uses internally).
+bstr   = "1"
+memchr = "2"
+
+# grep-matcher trait — provides Matcher, Captures, ByteSet, LineMatchKind, etc.
+grep-matcher = "0.1"
+
+# Serialisation for JSON output to Python.
+serde      = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Lazy static initialisation for the global REGISTRY and RUNTIME singletons.
+once_cell = "1"
+
+# Lua initialisation
+mlua = { version = "0.9", features = ["lua54", "vendored"] }
+
+# ── Dev dependencies ──────────────────────────────────────────────────────────
+
+[dev-dependencies]
+# bstr std feature unlocks the ByteSlice / ByteVec traits used in tests.
+bstr = { version = "1", features = ["std"] }
+
+# ── Note on removed items ─────────────────────────────────────────────────────
+# encoding_rs / encoding_rs_io — removed; no file I/O in this crate.
+# The broken [features] block (default=["pyo3"], pyo3=[]) has been removed:
+#   pyo3 is an unconditional dependency and the cfg(feature="pyo3") guard in
+#   error.rs has been replaced with an unconditional From<EngineError> impl.
