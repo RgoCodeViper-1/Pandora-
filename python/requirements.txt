@@ -1,0 +1,6 @@
+numpy
+webrtcvad
+sounddevice
+vosk
+edge-tts
+websockets

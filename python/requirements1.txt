@@ -1,0 +1,34 @@
+# PANDORA Python Requirements
+# ============================
+# Install with: pip install -r requirements.txt
+#
+# Optional packages are marked — the system degrades gracefully without them.
+# Install the full set for production; core-only for early development.
+
+# ── Core runtime ─────────────────────────────────────────────────
+websockets>=12.0           # WebSocket bridge to Node orchestrator
+psutil>=5.9.0              # System telemetry (CPU, memory, disk, network, processes)
+
+# ── VAD ──────────────────────────────────────────────────────────
+webrtcvad>=2.0.10          # WebRTC Voice Activity Detection (Stage 1)
+sounddevice>=0.4.6         # Cross-platform microphone capture
+numpy>=1.24.0              # Required by sounddevice
+
+# Silero VAD (Stage 2, conditional) — requires torch
+torch>=2.0.0               # [OPTIONAL] Required for Silero VAD
+
+# ── STT — choose one ─────────────────────────────────────────────
+vosk>=0.3.45               # Offline STT (default MVP, ~40 MB model)
+# faster-whisper>=1.0.0    # [OPTIONAL] Higher accuracy; uncomment to enable
+
+# ── TTS ──────────────────────────────────────────────────────────
+edge-tts>=6.1.9            # Microsoft Edge neural TTS (streaming)
+soundfile>=0.12.1          # Audio file decoding for playback
+
+# ── LLM providers — install only what you use ─────────────────────
+requests>=2.31.0           # OpenRouter and HTTP calls (weather scrape)
+openai>=1.0.0              # [OPTIONAL] GPT provider
+google-generativeai>=0.3.0 # [OPTIONAL] Gemini provider
+
+# ── Utilities ────────────────────────────────────────────────────
+# (No additional utilities required — stdlib handles JSON, re, pathlib, etc.)
