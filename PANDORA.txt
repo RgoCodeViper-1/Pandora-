@@ -1,0 +1,211 @@
+                    ┌──────────────────────────┐
+                    │       PANDORA UI         │
+                    │     Node / Ink CLI       │
+                    └────────────┬─────────────┘
+                                 │
+                     Voice / Text / UI Events
+                                 │
+                                 ▼
+                    ┌──────────────────────────┐
+                    │      MODE MANAGER        │
+                    │        modes/            │
+                    │                          │
+                    │ • User state             │
+                    │ • System state           │
+                    │ • Activity state         │
+                    │ • Internet availability  │
+                    │ • Resource pressure      │
+                    │ • Current interaction    │
+                    └────────────┬─────────────┘
+                                 │
+                         Mode + Capabilities
+                                 │
+                                 ▼
+                    ┌──────────────────────────┐
+                    │     PIPELINE POLICY      │
+                    │                          │
+                    │ Select minimum required  │
+                    │ processing capability    │
+                    └────────────┬─────────────┘
+                                 │
+              ┌──────────────────┼──────────────────┐
+              │                  │                  │
+              ▼                  ▼                  ▼
+      ┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+      │ OPTIMIZED    │   │   COMMAND    │   │ CONVERSATION │
+      │    IDLE      │   │     MODE     │   │     MODE     │
+      └──────┬───────┘   └──────┬───────┘   └──────┬───────┘
+             │                  │                  │
+       lightweight         Fast STT          Full STT
+       monitoring          Web Speech        Whisper.cpp
+       wake detection      / local STT       + dialogue
+             │                  │                  │
+             └──────────────────┼──────────────────┘
+                                │
+                                ▼
+                    ┌──────────────────────────┐
+                    │     PYTHON SERVICES      │
+                    │                          │
+                    │ VAD / STT / TTS          │
+                    │ Scheduler / Services     │
+                    └────────────┬─────────────┘
+                                 │
+                                 ▼
+                    ┌──────────────────────────┐
+                    │    RUST CORE_ENGINE      │
+                    │                          │
+                    │ Prefilter                │
+                    │ Matcher                  │
+                    │ Guards                   │
+                    │ Intent Processing        │
+                    │ Context                  │
+                    └────────────┬─────────────┘
+                                 │
+                                 ▼
+                    ┌──────────────────────────┐
+                    │      INTENT ROUTER       │
+                    └────────────┬─────────────┘
+                                 │
+              ┌──────────────────┼──────────────────┐
+              ▼                  ▼                  ▼
+        ┌───────────┐      ┌───────────┐      ┌───────────┐
+        │  SYSTEM   │      │    AI     │      │ OPERATIONS│
+        │           │      │           │      │           │
+        └─────┬─────┘      └─────┬─────┘      └─────┬─────┘
+              │                  │                  │
+              └──────────────────┼──────────────────┘
+                                 ▼
+                         ┌──────────────┐
+                         │   EXECUTOR   │
+                         └──────┬───────┘
+                                │
+                         Result / State
+                                │
+                  ┌─────────────┴─────────────┐
+                  ▼                           ▼
+          ┌──────────────┐            ┌──────────────┐
+          │ TTS SERVICE  │            │ SHARED STATE │
+          └──────┬───────┘            │Memory/ Config│
+                 │                    │ Persistence  │
+                 ▼                    └──────────────┘
+          ┌──────────────┐
+          │ PANDORA UI   │
+          └──────────────┘
+`----------------------------------------------------------------`
+*Cases*
+1. User gaming + high CPU
+
+`User gaming + high CPU`
+        ↓
+OPTIMIZED_IDLE
+        ↓
+system monitoring with low footprint and less active subsystems
+        ↓
+wake/interaction
+        ↓
+COMMAND MODE
+        ↓
+internet available?
+     ┌──────┴──────┐
+    YES            NO
+     ↓              ↓
+Web Speech       lightweight
+Google STT       whisper.cpp    
+     │            local STT
+     └──────┬──────┘
+            ↓
+       core_engine
+
+2. Conversation Mode
+
+User actively conversing
+        ↓
+ CONVERSATION MODE
+        ↓
+       VAD
+        ↓
+    Whisper.cpp
+        ↓
+ Rust core_engine
+        ↓───────┐
+        │   If pre rendered response available
+        │                ▼
+Dialogue/AI           Cache ────┐ // No LLM call, just return cached response
+        ↓                       │
+    Executor              TTS Response Cache
+        ↓                       │
+    TTS Service ────────────────┘
+        ↓
+    Pandora UI       
+    
+
+`-----------------------------------------------------------------------------------`
+@ PANDORA Core Modules 
+           ┌──────────────────────────┐
+           │    Runtime Mainframe     │
+           │          CLI             │
+           │                          │
+           │         PANDORA          │
+           └────────────┬─────────────┘
+                        │
+         ┌──────────────└─────────────────┬────────────────────────────────┐────────────────────────┐
+         │                                │                                │                        │ 
+         ┼────────────────────────────────│────────────────────────────────│────────────────────────┘────────┐
+         ▼                                ▼                                ▼                                 ▼
+┌──────────────────────┐    ┌──────────────────────┐    ┌──────────────────────┐
+│ Auto.Monitoring &    │    │  Real-time           │    │ Security and         │
+│ System Optimization  │    │  Assistant           │    │ Protection           │
+│                      │    │                      │    │                      │
+│ • Telemetry          │    │ • Dedicated Voice/   │    │ • Security Lockdown  │
+│                      │    │   Text Conversation  │    │    Protocols         │
+│ • Resource           │    │   Mode               │    │                      │
+│   Allocation &       │    │                      │    │ • User Alerts &      │
+│   Usage Monitoring   │    │ • Personalized       │    │  Notifications on    │
+│                      │    │   Assistant with     │    │  Suspicious Activity │ 
+│ • User Alerts &      │    │   Unique Personality │    │                      │
+│   Permission-Gated   │    │                      │    │ • Encryption &       │
+│   Execution          │    │ • User Assistance &  │    │   Cryptology Modules │
+│                      │    │   Multi-Type Task    │    │                      │
+│ • Autonomous         │    │   Execution          │    │ • Application &      │
+│   Countermeasures &  │    │                      │    │   Process Integrity  │
+│   Specific App       │    │ • Context-Aware      │    │   Monitoring         │
+│   Launches           │    │   Interaction        │    │                      │
+│                      │    │                      │    │ • Access Control &   │
+│ • Adaptive Resource  │    │ • Task & Session     │    │   Permission         │
+│   Optimization       │    │   Continuity         │    │   Enforcement        │
+│                      │    │                      │    │                      │
+│ • Background System  │    │ • Response & Action  │    │ • Safe Execution &   │
+│   Health Monitoring  │    │   Feedback           │    │   Recovery Handling  │
+│                      │    │                      │    │                      │
+└──────────┬───────────┘    └──────────┬───────────┘    └──────────┬───────────┘
+           │                           │                           │
+           └───────────────────────────┼───────────────────────────┘
+                                       │
+                                       ▼
+                         ┌─────────────────────────────┐
+                         │      Context and Data       │
+                         │          Storage            │
+                         │                             │
+                         │ • Conversation Context Logs │
+                         │ • User Data & Preferences   │
+                         │ • System Metrics &          │
+                         │   Performance Logs          │
+                         │ • TTS Cache & Audio Assets  │
+                         │ • Security & Access Control │
+                         │   Logs                      │
+                         │ • User Interaction History  │
+                         │ • User Feedback for Training│
+                         │                             │
+                         │    ┌────────────────┐       │
+                         │    │ For ML Network │       │
+                         │    │ Training for   │       │
+                         │    │ Future         │       │
+                         │    │ Implementations│       │
+                         │    └────────────────┘       │
+                         │                             │
+                         │ • Error & Exception Logs    │
+                         │ • Configuration & Settings  │
+                         │   Files                     │
+                         │ • Personalization &         │
+                         │   Customization Settings    │
+                         └─────────────────────────────┘                                                                                                    
