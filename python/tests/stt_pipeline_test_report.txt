@@ -1,0 +1,79 @@
+(pandora_venv) PS C:\VSC Files\PANDORA\python\tests> pytest test_stt_pipeline.py -v
+============================================= test session starts =============================================
+platform win32 -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0 -- C:\VSC Files\PANDORA\pandora_venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\VSC Files\PANDORA\python\tests
+plugins: anyio-4.13.0
+collected 7 items                                                                                              
+
+test_stt_pipeline.py::test_whisper_server_reachable PASSED                                               [ 14%]
+test_stt_pipeline.py::test_whisper_stt_import PASSED                                                     [ 28%]
+test_stt_pipeline.py::test_whisper_transcribe_sine ERROR                                                 [ 42%]
+test_stt_pipeline.py::test_whisper_transcribe_real ERROR                                                 [ 57%]
+test_stt_pipeline.py::test_full_pipeline ERROR                                                           [ 71%]
+test_stt_pipeline.py::test_vad_mic_open PASSED                                                           [ 85%]
+test_stt_pipeline.py::test_vad_ws_dependency PASSED                                                      [100%]
+
+=================================================== ERRORS ====================================================
+_______________________________ ERROR at setup of test_whisper_transcribe_sine ________________________________
+file C:\VSC Files\PANDORA\python\tests\test_stt_pipeline.py, line 190
+  def test_whisper_transcribe_sine(stt) -> bool:
+E       fixture 'stt' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+C:\VSC Files\PANDORA\python\tests\test_stt_pipeline.py:190
+_______________________________ ERROR at setup of test_whisper_transcribe_real ________________________________
+file C:\VSC Files\PANDORA\python\tests\test_stt_pipeline.py, line 225
+  def test_whisper_transcribe_real(stt, wav_path: str) -> bool:
+E       fixture 'stt' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+C:\VSC Files\PANDORA\python\tests\test_stt_pipeline.py:225
+____________________________________ ERROR at setup of test_full_pipeline _____________________________________
+file C:\VSC Files\PANDORA\python\tests\test_stt_pipeline.py, line 254
+  def test_full_pipeline(stt, wav_path: str | None) -> bool:
+E       fixture 'stt' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+C:\VSC Files\PANDORA\python\tests\test_stt_pipeline.py:254
+============================================== warnings summary ===============================================
+test_stt_pipeline.py::test_whisper_server_reachable
+  C:\VSC Files\PANDORA\pandora_venv\Lib\site-packages\_pytest\python.py:170: PytestReturnNotNoneWarning: Test functions should return None, but test_stt_pipeline.py::test_whisper_server_reachable returned <class 'bool'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+test_stt_pipeline.py::test_whisper_stt_import
+  C:\VSC Files\PANDORA\pandora_venv\Lib\site-packages\speech_recognition\__init__.py:7: DeprecationWarning: 'aifc' is deprecated and slated for removal in Python 3.13
+    import aifc
+
+test_stt_pipeline.py::test_whisper_stt_import
+  C:\VSC Files\PANDORA\pandora_venv\Lib\site-packages\speech_recognition\__init__.py:8: DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13
+    import audioop
+
+test_stt_pipeline.py::test_whisper_stt_import
+  C:\VSC Files\PANDORA\pandora_venv\Lib\site-packages\_pytest\python.py:170: PytestReturnNotNoneWarning: Test functions should return None, but test_stt_pipeline.py::test_whisper_stt_import returned <class 'tuple'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+test_stt_pipeline.py::test_vad_mic_open
+  C:\VSC Files\PANDORA\pandora_venv\Lib\site-packages\torch\jit\_serialization.py:176: DeprecationWarning: `torch.jit.load` is deprecated. Please switch to `torch.export`.
+    warnings.warn(
+
+test_stt_pipeline.py::test_vad_mic_open
+  C:\VSC Files\PANDORA\pandora_venv\Lib\site-packages\_pytest\python.py:170: PytestReturnNotNoneWarning: Test functions should return None, but test_stt_pipeline.py::test_vad_mic_open returned <class 'bool'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================================== short test summary info ===========================================
+ERROR test_stt_pipeline.py::test_whisper_transcribe_sine
+ERROR test_stt_pipeline.py::test_whisper_transcribe_real
+ERROR test_stt_pipeline.py::test_full_pipeline
+================================== 4 passed, 6 warnings, 3 errors in 26.48s ===================================
+(pandora_venv) PS C:\VSC Files\PANDORA\python\tests>

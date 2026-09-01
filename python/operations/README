@@ -1,0 +1,7 @@
+├── operations/                            # ⚙️ #pure-functions #no-side-effects
+│   ├── file_ops.py                        # #filesystem #read-write-delete-search
+│   ├── system_ops.py                      # #os-commands #process-control
+│   ├── web_ops.py                         # #http #scraping #api-calls
+│   └── data_ops.py                        # #transformations #parsing
+
+##Note *The system_monitor.py is the equivalent of the system_ops.py. It was before located in the utils/ folder.

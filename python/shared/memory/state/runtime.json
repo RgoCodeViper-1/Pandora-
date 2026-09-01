@@ -1,0 +1,16 @@
+{
+  "status": "online",
+  "lastIntent": "get_weather",
+  "activeTask": "Weather Analysis",
+  "context": {
+    "location": "Kolkata",
+    "temp": "25°F",
+    "condition": "Clear",
+    "last_updated": "2026-04-29T10:51:00Z"
+  },
+  "ui_trigger": {
+    "should_spawn": true,
+    "type": "TELEMETRY",
+    "priority": "normal"
+  }
+}
