@@ -1,0 +1,7 @@
+python/
+├── automation/                            # ⚡ #background-jobs #task-runners
+│   ├── scheduler.py                       # #cron-like
+│   ├── triggers.py                        # #event-based
+│   └── workflows.py                       # #multi-step-automation
+
+*Initially the scheduler.py was located in the core/ dir.But it is now moved here due to optimization and refactoring  
