@@ -1,0 +1,7 @@
+python/
+|── ai/                                    # 🤖 #intelligence-layer
+│   ├── planner.py                         # #task-planning #decision-engine
+│   ├── intent_parser.py                   # #nlp #intent-detection
+│   ├── llm_client.py                      # #llm-bridge
+│   ├── tools_router.py                    # #tool-selection
+│   └── embeddings.py                      # #semantic-memory
