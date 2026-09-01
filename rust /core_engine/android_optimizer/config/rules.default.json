@@ -1,0 +1,14 @@
+{
+  "protected": [
+    { "pattern": "android", "reason": "Core Android system package" },
+    { "pattern": "com.android.systemui", "reason": "System UI - required for the device shell" },
+    { "pattern": "com.android.phone", "reason": "Handles cellular/telephony" },
+    { "pattern": "com.android.bluetooth", "reason": "Bluetooth stack" },
+    { "pattern": "com.google.android.gms", "reason": "Google Play Services - critical Android service" },
+    { "pattern": "com.google.android.gsf", "reason": "Google Services Framework" },
+    { "pattern": "system_server", "reason": "Core Android system server process" },
+    { "pattern": "com.samsung.android.*", "reason": "Samsung OEM system service" },
+    { "pattern": "com.miui.*", "reason": "Xiaomi MIUI system service" }
+  ],
+  "safe_to_close_rss_threshold_kb": 150000
+}
