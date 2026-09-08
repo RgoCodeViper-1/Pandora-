@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "1.0",
+  "description": "Provider-neutral PANDORA language model configuration metadata.",
+  "secretsFile": "shared/config/api_keys.json",
+  "modelsFile": "shared/config/llm_models.json",
+  "environmentOverrides": {
+    "openrouter": "OPENROUTER_API_KEY",
+    "openai": "OPENAI_API_KEY",
+    "gemini": "GEMINI_API_KEY"
+  },
+  "conversation": {
+    "enabled": true,
+    "unknownIntentRouting": true,
+    "historyFile": "shared/memory/conversations/session_001.md"
+  }
+}

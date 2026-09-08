@@ -1,0 +1,17 @@
+{
+  "provider": "openrouter",
+  "models": {
+    "openrouter": "nvidia/nemotron-nano-9b-v2:free",
+    "gpt": "gpt-3.5-turbo",
+    "gemini": "gemini-pro"
+  },
+  "temperature": 0.9,
+  "maxTokens": 160,
+  "historyTrim": 8,
+  "fallbackOrder": [
+    "openrouter",
+    "gpt",
+    "gemini",
+    "mock"
+  ]
+}

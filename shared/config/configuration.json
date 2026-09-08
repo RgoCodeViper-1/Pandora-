@@ -1,0 +1,43 @@
+{
+  "system": {
+    "name": "PANDORA",
+    "mode": "development",
+    "logLevel": "info",
+    "version" : "1.0.0"
+  },
+  "audio": {
+    "sampleRate": 16000,
+    "vad": {
+      "engine": "webrtc",
+      "aggressiveness": 2,
+      "silenceThresholdMs": 1800,
+      "useSilero": true,
+      "sileroConfidenceThreshold": 0.5
+    }
+  },
+  "speech": {
+    "stt": {
+      "engine": "whisper",
+      "fallback": "google",
+      "whisperUrl": "http://127.0.0.1:8080/inference",
+      "modelPath": "native/whisper_cpp/"
+    },
+    "tts": {
+      "engine": "edge",
+      "voice": "en-US-GuyNeural"
+    }
+  },
+  "memory": {
+    "enabled": true,
+    "statePath": "shared/memory/state/runtime.json"
+  },
+  "security": {
+    "shellExecution": false,
+    "adminMode": false,
+    "sandboxEnabled": true,
+    "whitelistedCommands": []
+  },
+  "execution": {
+    "lockTimeoutSeconds": 10
+  }
+}
