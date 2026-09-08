@@ -1,0 +1,10 @@
+
+python/
+│── speech/                                # 🔊 #audio-processing #engine-layer
+│   ├── stt_engine.py                      # #transcription-core
+│   ├── tts_engine.py                      # #synthesis-core
+│   ├── audio_utils.py                     # #audio-processing
+│   ├── pipeline.py                        # #audio-flow
+│   └── voices/                            # #voice-configs
+
+* the stt.py & tts.py are equivalent to stt_engine.py & tts_engine.py respectively
